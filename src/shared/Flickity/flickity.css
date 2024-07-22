@@ -1,0 +1,60 @@
+/*! Flickity v2.3.0
+https://flickity.metafizzy.co
+---------------------------------------------- */
+
+.flickity-enabled {
+   position: relative;
+   cursor: pointer;
+   height: 800px;
+}
+
+.flickity-enabled:focus {
+   position: relative;
+   outline: none;
+}
+
+.flickity-viewport {
+   overflow: hidden;
+   position: relative;
+   height: 100%;
+}
+
+.flickity-slider {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   
+}
+
+/* ---- page dots ---- */
+
+.flickity-page-dots {
+   position: absolute;
+   width: 100%;
+   padding: 0;
+   margin: 0;
+   list-style: none;
+   text-align: center;
+   line-height: 1;
+   bottom: 40px;
+}
+
+.flickity-rtl .flickity-page-dots {
+   direction: rtl;
+}
+
+.flickity-page-dots .dot {
+   display: inline-block;
+   width: 10px;
+   height: 10px;
+   margin: 0 8px;
+   background: #ffffff;
+   border-radius: 6px;
+   cursor: pointer;
+   transition: all .4s;
+}
+
+.flickity-page-dots .dot.is-selected {
+   width: 32px;
+   background-color: #8DD3BB;
+}
