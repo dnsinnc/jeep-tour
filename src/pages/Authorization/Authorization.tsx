@@ -1,5 +1,11 @@
 import { useRef, useState } from "react";
 
+import { Link } from "react-router-dom";
+
+import { useUserAuthMutation } from "../../redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../../redux/userSlicer";
+import { useGetUserQuery } from "../../redux";
 
 import { GreenButton } from "../../shared/UI/CustomButtons";
 import CustomInput from "../../shared/UI/CustomInput";
@@ -13,28 +19,21 @@ import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa6";
 
-
-
 import air from './air.png'
 import hotel from './hotel.png'
-import { Link } from "react-router-dom";
-import axios from "axios";
+
 
 function Authorization() {
 
+   const dispatch = useDispatch()
+
    const inputRef = useRef<string>('password')
    const [inputType, setInputType] = useState('password')
+   const [authError, setAuthError] = useState('')
+   const [user, setUser] = useState('')
 
-   function ChangeInputType(inputRef: React.RefObject<HTMLInputElement>) {
-      if (inputRef.current) {
-         if (inputRef.current.type === 'password') {
-            setInputType('text');
-         } else {
-            setInputType('password');
-         }
-      }
-   }
-
+   const [userAuth, {isError}] = useUserAuthMutation()
+   
 
    const flickityOptions = {
       initialIndex: 1,
@@ -46,71 +45,44 @@ function Authorization() {
       images: [air, hotel, air]
    }
 
-   const [user, setUser] = useState()
+   const ChangeInputType = (inputRef: React.RefObject<HTMLInputElement>) => {
+      if (inputRef.current) {
+         if (inputRef.current.type === 'password') {
+            setInputType('text');
+         } else {
+            setInputType('password');
+         }
+      }
+   }
 
-
-
-   function onAuth(e) {
+   const onAuth = async (e) => {
       e.preventDefault();
 
-      const username = e.target.username.value
-      const password = e.target.password.value
-  
-      const authUser = {
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+
+      const authUserData = {
          username: username,
          password: password
       }
-     
 
-      axios.post('http://localhost:8000/user/auth', authUser, {
-         headers: {
-            "Content-Type": "application/json",
-            'Authorization': 'Basic ' + btoa(`${username}:${password}`),
+      try {
+         await userAuth(authUserData).unwrap();
+         dispatch(addUser(authUserData))
+         setUser(authUserData.username)
+         console.log(authUserData.username)
+      } catch (error) {
+         if (error.data && error.data.detail) {
+            setAuthError(error.data.detail);
+            setUser('')
          }
-      }).then(response => {
-         console.log('Response data:', response.data);
-      }).catch(error => {
-         if (error.response) {
-            console.error('Response data:', error.response.data);
-            console.error('Response status:', error.response.status);
-            console.error('Response headers:', error.response.headers);
-         } else if (error.request) {
-            console.error('Request data:', error.request);
-         } else {
-            console.error('Error message:', error.message);
-         }
-         console.error('Config:', error.config);
-      });
-
-      axios.get('http://localhost:8000/user/me/profile/', {
-         headers: {
-            "Content-Type": "application/json",
-            'accept': 'application/json',
-            'Authorization': 'Basic ' + btoa(`${username}:${password}`),
-         }
-      }).then(response => {
-         setUser(response.data)
-      })
-         .catch(error => {
-            if (error.response) {
-               console.error('Response data:', error.response.data);
-               console.error('Response status:', error.response.status);
-               console.error('Response headers:', error.response.headers);
-            } else if (error.request) {
-               console.error('Request data:', error.request);
-            } else {
-
-               console.error('Error message:', error.message);
-            }
-            console.error('Config:', error.config);
-         });
+      }
    }
-
 
    return (
       <div className="container pt-[240px] flex justify-between ">
          <div className="max-w-[512px] flex flex-col gap-[24px]">
-            
+
             <h2 className="title" >Login</h2>
             <h2 className="title" ><Link to={'/changepass'}> changePass</Link></h2>
             <p>Login to access your Jeep Tour account</p>
@@ -134,7 +106,10 @@ function Authorization() {
                   name="password"
                />
 
-               {user ? <h2 className="title" > Hi! {user.username}</h2> : ''}
+               <div className=" mt-2">
+                  {isError && <p className="text-[red]">{authError}</p>}
+                  {user ? <h2 className="title text-[green]" >Hi, {user}!</h2> : ''}
+               </div>
 
 
                <div className="pt-[20px]">

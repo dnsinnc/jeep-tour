@@ -34,10 +34,10 @@ function RecoveryPass() {
             <form>
               
                <CustomInput
-                  width={512} 
+                  width={512}
                   label={"Email"}
                   type={"email"}
-                  autofocus
+                  autofocus name={"verify"}
                />
                
                <div className="pt-[34px]">

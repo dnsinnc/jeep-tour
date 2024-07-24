@@ -1,4 +1,7 @@
-import { useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
+import { useChangePassMutation } from "../../redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../../redux/userSlicer";
 
 import { GreenButton } from "../../shared/UI/CustomButtons";
 import CustomInput from "../../shared/UI/CustomInput";
@@ -9,17 +12,22 @@ import { IoEye } from "react-icons/io5";
 
 import air from '../Authorization/air.png'
 import hotel from '../Authorization/hotel.png'
-import axios from "axios";
 import { Link } from "react-router-dom";
+
+
 
 function ChangePass() {
 
+   const authUser = useSelector((state) => state.user.authUser)
+   const dispatch = useDispatch()
+
+
    const inputRef = useRef<string>('password')
-
    const [inputType, setInputType] = useState('password')
+   const [changePass] = useChangePassMutation()
 
 
-   function ChangeInputType(inputRef: React.RefObject<HTMLInputElement>) {
+   const ChangeInputType =(inputRef: React.RefObject<HTMLInputElement>) =>{
       if (inputRef.current) {
          if (inputRef.current.type === 'password') {
             setInputType('text');
@@ -29,62 +37,41 @@ function ChangePass() {
       }
    }
 
-
    const flickityOptions = {
       initialIndex: 1,
       autoPlay: true
    }
+
    const imageForSlider = {
       id: [1, 2, 3],
       title: ["first", "second", "three"],
       images: [air, hotel, air]
    }
 
+   const handleChangePass = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-      const changePass = (e) => {
-         e.preventDefault();
+      const old_password = e.target.old_password.value
+      const password_1 = e.target.password_1.value
+      const password_2 = e.target.password_2.value
 
-         const old_password = e.target.old_password.value
-         const password_1 = e.target.password_1.value
-         const password_2 = e.target.password_2.value
-
-      //    const passwords = `
-      // {
-      // \"old_password\":\"${e.target.old_password.value}\",
-      // \"password_1\":\"${e.target.password_1.value}\",
-      //    \"password_2\":\"${e.target.password_2.value}\"}
-         
-       
-      //    `
-         
-
-         const passwords = {
+      const changePassData = {
          old_password: old_password,
-            password_1: password_1,
-            password_2: password_2
+         password_1: password_1,
+         password_2: password_2
+      }
+    
+      console.log(authUser)
+      try {
+         await changePass({ changePassData, authUser }).unwrap()
+         dispatch(addUser({ ...authUser, password: changePassData.password_2 }))
+         console.log('ok')
+      } catch (error) {
+         console.log(error)
+         if (error.data && error.data.detail) {
+            console.log(error.data.detail)
          }
-
-         axios.post('http://localhost:8000/user/change-password/', passwords, {
-            headers: {
-               'Authorization': 'Basic ' + btoa('Denis123:Denis5522'),
-            }
-         })
-            .then(response => {
-               console.log('Response:', response.data);
-            })
-            .catch(error => {
-               if (error.response) {
-                  console.error('Response data:', error.response.data);
-                  console.error('Response status:', error.response.status);
-                  console.error('Response headers:', error.response.headers);
-               } else if (error.request) {
-                  console.error('Request data:', error.request);
-               } else {
-                  console.error('Error message:', error.message);
-               }
-               console.error('Config:', error.config);
-            });
-      console.log(passwords)
+      }
    }
 
 
@@ -96,10 +83,10 @@ function ChangePass() {
             <h2 className="title">Set a password</h2>
             <p>Your previous password has been reseted. Please set a new password for your account.</p>
 
-            <form onSubmit={changePass}>
+            <form onSubmit={handleChangePass}>
                <CustomInput
                   onClick={ChangeInputType}
-                  icon={inputType == 'password' ? <IoEyeOff/> : <IoEye/>}
+                  icon={inputType == 'password' ? <IoEyeOff /> : <IoEye />}
                   width={512}
                   type={inputType}
                   label={'Old Password'}
@@ -109,7 +96,7 @@ function ChangePass() {
                />
                <CustomInput
                   onClick={ChangeInputType}
-                  icon={inputType == 'password' ? <IoEyeOff/> : <IoEye/>}
+                  icon={inputType == 'password' ? <IoEyeOff /> : <IoEye />}
                   width={512}
                   type={inputType}
                   label={'Create New Password'}
