@@ -1,24 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IAuth, IRegister, IChangePass } from "../types/userTypes";
-
-
-interface ChangePassArgs {
-   authUser: IAuth;
-   changePassData: IChangePass;
-}
+import { IAuth, IRegister } from "../types/userTypes";
 
 export const userApi = createApi({
    reducerPath: 'userApi',
+   tagTypes: ['User'],
    baseQuery: fetchBaseQuery({
-      baseUrl: 'http://localhost:8000'
+      baseUrl: 'http://localhost:8000',
    }),
    endpoints: (build) => ({
-      registerUser: build.mutation({
+      registerUser: build.mutation<void, IRegister>({
          query: (body: IRegister) => ({
             url: 'user/register',
             method: 'POST',
             body,
-         })
+         }),
       }),
       userAuth: build.mutation({
          query: (body: IAuth) => ({
@@ -28,18 +23,17 @@ export const userApi = createApi({
                'Authorization': 'Basic ' + btoa(`${body.username}:${body.password}`),
             },
             credentials: 'include',
-
             body,
-         })
+         }),
       }),
       changePass: build.mutation({
-         query: ({ changePassData, authUser }: ChangePassArgs) => ({
+         query: ({ changePassData, authUser }) => ({
             url: 'user/change-password',
             method: 'POST',
             headers: {
                'Authorization': 'Basic ' + btoa(`${authUser.username}:${authUser.password}`),
             },
-            body: changePassData
+            body: changePassData,
          }),
       }),
       getUser: build.query({
@@ -48,24 +42,41 @@ export const userApi = createApi({
             headers: {
                'Authorization': 'Basic ' + btoa(`${authUser.username}:${authUser.password}`),
             },
-         })
+         }),
+         providesTags: [{ type: 'User', id: 'USER' }],
       }),
       addProfileAvatar: build.mutation({
-         query: ({ formData, authUserData }) => ({
+         query: ({ avatar, authUser }) => ({
             url: 'user/update/avatar',
-            method: 'PUT',
+            method: 'PATCH',
             headers: {
-               'Authorization': 'Basic ' + btoa(`${authUserData.username}:${authUserData.password}`),
+               'Authorization': 'Basic ' + btoa(`${authUser.username}:${authUser.password}`),
+               "Cache-Control": "no-cache, no-store, must-revalidate",
+               'Pragma': 'no-cache',
+               'Expires': '0',
             },
-            body: formData,
+            body: avatar,
+         }),
+         invalidatesTags: [{ type: 'User', id: 'USER' }],
+      }),
+      deleteUser: build.mutation({
+         query: ({passwords, authUser }) => ({
+            url: '/user/delete/me/profile/',
+            method: 'DELETE',
+            headers: {
+               'Authorization': 'Basic ' + btoa(`${authUser.username}:${authUser.password}`),
+            },
+            body: passwords,
+         }),
+      }),
+   }),
+});
 
-         })
-      })
-   })
-
-})
-
-
-
-
-export const { useRegisterUserMutation, useUserAuthMutation, useChangePassMutation, useGetUserQuery, useAddProfileAvatarMutation } = userApi;
+export const {
+   useRegisterUserMutation,
+   useUserAuthMutation,
+   useChangePassMutation,
+   useGetUserQuery,
+   useAddProfileAvatarMutation,
+   useDeleteUserMutation,
+} = userApi;

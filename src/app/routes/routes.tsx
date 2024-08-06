@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter,  Navigate } from "react-router-dom";
 import Authorization from "../../pages/Authorization/Authorization";
 import RecoveryPass from "../../pages/RecoveryPass/RecoveryPass";
 import Registration from "../../pages/Registration/Registration";
@@ -7,28 +7,41 @@ import UserProfile from "../../pages/UserProfile/UserProfile";
 
 
 
-
-export const routes = createBrowserRouter([
+export const notAuthRoutes = createBrowserRouter([
    {
       path: '/',
-      element: <Authorization/>,
+      element: <Authorization />,
+      errorElement: <Navigate to={'/'} />
+   },
+   {
+      path: '/registration',
+      element: < Registration />,
+      errorElement: <Navigate to={'/'} />
+
+
    },
 
    {
-      path: '/registration',
-      element: < Registration/>,
+      path: '/forgot-password',
+      element: < RecoveryPass />,
+      errorElement: <Navigate to={'/'} />
+
+
    },
+])
+
+export const authRoutes = createBrowserRouter([
    {
-      path: '/forgotpass',
-      element: < RecoveryPass/>,
-   },
-   {
-      path: '/changepass',
+      path: '/change-password',
       element: < ChangePass />,
+      errorElement: <Navigate to={'/'} />
+
+
    },
    {
       path: '/my-profile',
       element: < UserProfile />,
+      errorElement: <Navigate to={'/'} />
    }
 
 ])

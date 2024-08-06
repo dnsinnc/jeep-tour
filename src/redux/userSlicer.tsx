@@ -1,13 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IAuth } from "../types/userTypes";
 
+        
 
-interface UserState{
-   authUser: IAuth | object,
-}
-
-const initialState: UserState = {
-   authUser: {},
+const initialState = {
+   authUser: JSON.parse(sessionStorage.getItem("user")),
 }
 
 
@@ -17,10 +14,15 @@ export const userSlicer = createSlice({
    initialState,
    reducers: {
       addUser: (state, action: PayloadAction<IAuth>) => {
-         state.authUser = action.payload;
-         // console.log(action.payload)
+         const authUser = action.payload
+         sessionStorage.setItem("user", JSON.stringify(authUser));
+         const user = JSON.parse(sessionStorage.getItem("user"));
+         state.authUser = user
+         window.location.reload()
       },
       deleteUser: (state) => {
+         window.location.reload()
+         sessionStorage.removeItem("user");
          state.authUser = {};
       }
    }

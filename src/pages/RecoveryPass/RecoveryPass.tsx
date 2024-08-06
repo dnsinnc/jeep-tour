@@ -34,7 +34,7 @@ function RecoveryPass() {
             <form>
               
                <CustomInput
-                  width={512}
+                  width={'100%'}
                   label={"Email"}
                   type={"email"}
                   autofocus name={"verify"}
@@ -42,7 +42,7 @@ function RecoveryPass() {
                
                <div className="pt-[34px]">
                   <GreenButton
-                     width={512}>
+                     width={'100%'}>
                      <p>Submit</p>
                   </GreenButton>
                </div>

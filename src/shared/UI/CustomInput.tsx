@@ -1,11 +1,13 @@
-import { ReactNode, useRef } from "react";
+import { motion } from "framer-motion";
+import { forwardRef, ReactNode, useRef } from "react";
+// import { animText } from "../../app/MotionAnimations/animations";
 
 
 
 interface InputProps {
-   width: number;
+   width: string;
    placeholder?: string;
-   label: string;
+   label?: string;
    type: string;
    icon?: ReactNode;
    onClick?: (inputRef: React.RefObject<HTMLInputElement>) => void;
@@ -13,12 +15,12 @@ interface InputProps {
    pattern?: string
    autofocus?: boolean
    name: string
+   
 }
 
 
 
-
-function CustomInput({ placeholder, type, label, width, icon, onClick, pattern, autofocus, name }: InputProps) {
+export const CustomInput = forwardRef(({ placeholder, type, label, width, icon, onClick, pattern, autofocus, name }: InputProps, ref) =>{
 
    const inputRef = useRef(null)
 
@@ -29,14 +31,27 @@ function CustomInput({ placeholder, type, label, width, icon, onClick, pattern, 
    };
 
    return ( 
-      <div style={{ width: `${width}px` }} className="form">
-         <span className="form__label">{label}</span>
-         <input name={name} autoFocus={autofocus} required ref={inputRef} className="form__input" type={type} placeholder={placeholder} pattern={pattern} />
-         <div onClick={handleClick} className="form__icon">
+      <motion.div
+         ref={ref}
+         style={{ width: `${width}` }}
+         className="form">
+         {label && <span className="form__label">{label}</span>}
+         <input
+            className="form__input"
+            name={name}
+            autoFocus={autofocus}
+            required ref={inputRef}
+            type={type}
+            placeholder={placeholder}
+            pattern={pattern} />
+         <div
+            className="form__icon"
+            onClick={handleClick} >
             {icon}
          </div>
-      </div>
+      </motion.div>
     );
-}
+})
 
-export default CustomInput;
+export const MCustomInput = motion(CustomInput);
+export default CustomInput
