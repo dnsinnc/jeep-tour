@@ -22,7 +22,7 @@ import { FaApple } from "react-icons/fa6";
 import air from './air.png'
 import hotel from './hotel.png'
 import CustomToast, { ToastVariant } from "../../shared/UI/CustomToast";
-import { animText, upAnimText } from "../../app/MotionAnimations/animations";
+import { animText, upAnimText } from "../../app/MAnimations/animations";
 import { motion } from "framer-motion";
 
 
@@ -71,10 +71,10 @@ function Authorization() {
       try {
          await userAuth(authUserData).unwrap();
          setTimeout(() => {
-            nav('/my-profile')
+            nav('/')
             dispatch(addUser(authUserData))
 
-         }, 2000)
+         }, 1000)
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
          setAuthError(error.data.detail);
@@ -87,11 +87,10 @@ function Authorization() {
          animate="visible"
          className="container pt-[240px] flex justify-between ">
          <div className="max-w-[512px] flex flex-col gap-[24px]">
-            <motion.h2  variants={upAnimText} className="title" >Login</motion.h2>
+            <motion.h2 variants={upAnimText} className="text-[40px] font-montserrat-600" >Login</motion.h2>
             <motion.p variants={upAnimText} >Login to access your Jeep Tour account</motion.p>
             <motion.form onSubmit={onAuth}>
                <MCustomInput
-                  width={'100%'}
                   placeholder={''}
                   type={'text'}
                   label={'Username'}
@@ -102,7 +101,6 @@ function Authorization() {
                <MCustomInput
                   onClick={ChangeInputType}
                   icon={inputType == 'password' ? <IoEyeOff /> : <IoEye />}
-                  width={'100%'}
                   placeholder={''}
                   type={inputType}
                   label={'Password'}
@@ -135,7 +133,7 @@ function Authorization() {
                   <input className="checkbox" type="checkbox" name="" id="" />
                   <p>Remember me</p>
                </div>
-                <Link to={"/forgotpass"}><p className="red-text">Forgot password</p> </Link>
+               <Link to={"/forgotpass"}><p className="red-text">Forgot password</p> </Link>
 
             </div>
 

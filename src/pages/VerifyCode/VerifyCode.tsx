@@ -50,22 +50,19 @@ function VerifyCode() {
 
                <CustomInput
                   onClick={ChangeInputType}
-                  icon={inputType == 'password' ? <IoEyeOff/> : <IoEye/>}
-                  width={512}
+                  icon={inputType == 'password' ? <IoEyeOff /> : <IoEye />}
                   type={inputType}
                   label={'Enter Code'}
                   ref={inputRef}
-                  autofocus
-               />
+                  autofocus name={"verify"}               />
                <div className="flex flex-col gap-[40px] pt-4">
                   <div className="flex gap-[5px]">
                      <p>Didn’t receive a code? <span className="red-text">Resend</span></p>
                   </div>
 
                   <GreenButton
-                     width={512}>
-                     <p id={'subm'} 
-                     className="328">Verify</p>
+                     width={'100%'}>
+                     <p >Verify</p>
                   </GreenButton>
                </div>
             </form>

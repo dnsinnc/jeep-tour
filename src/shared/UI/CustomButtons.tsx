@@ -4,22 +4,24 @@ interface ButtonProps {
    children: React.ReactChild | React.ReactNode,
    width?: string;
    onClick?: () => void;
+   img?: React.ReactElement
 }
 
-export function GreenButton({ children, width }: ButtonProps) {
+export function GreenButton({img, children, width }: ButtonProps) {
    return (
 
-      <button type="submit" style={{ maxWidth: `${width}` }} className="animate-pulse green-button">
+      <button type="submit" style={{ maxWidth: `${width}` }} className="items-center flex gap-2 button green-button hover:bg-[#66b798]">
+         {img} 
          {children}
       </button>
    )
 }
 
 
-export function ChangeButton({ children, onClick }: ButtonProps) {
+export function TransparentButton({ children, onClick, width }: ButtonProps) {
    return (
-      <button onClick={onClick} type="submit" className=" animated-button text-[14px] px-[32px] h-[48px] border border-solid border-[#8DD3BB] rounded-[4px] font-montserrat-500 flex items-center gap-[4px]">
-         {children}
+      <button onClick={onClick} style={{ maxWidth: `${width}` }} type="submit" className="tranparent-button">
+          {children}
       </button>
    )
 }

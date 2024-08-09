@@ -4,7 +4,7 @@ import { addUser, deleteUser } from "../../redux/userSlicer";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import { GreenButton } from "../../shared/UI/CustomButtons";
-import  { MCustomInput } from "../../shared/UI/CustomInput";
+import { MCustomInput } from "../../shared/UI/CustomInput";
 import FlickitySlider from "../../shared/Flickity/FlikcitySlider";
 
 import { IoEyeOff } from "react-icons/io5";
@@ -13,8 +13,9 @@ import { IoEye } from "react-icons/io5";
 import air from '../Authorization/air.png'
 import hotel from '../Authorization/hotel.png'
 import CustomToast, { ToastVariant } from "../../shared/UI/CustomToast";
-import { animText, upAnimText } from "../../app/MotionAnimations/animations";
+import { animText, upAnimText } from "../../app/MAnimations/animations";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function ChangePass() {
 
@@ -25,12 +26,12 @@ function ChangePass() {
    const inputRef = useRef<HTMLElement>(null)
    const [inputType, setInputType] = useState('password')
    const [errorMess, setErrorMess] = useState('')
-   const [changePass,{isSuccess}] = useChangePassMutation()
+   const [changePass, { isSuccess }] = useChangePassMutation()
 
 
    const ChangeInputType = (inputRef: React.RefObject<HTMLInputElement>) => {
       if (inputRef.current) {
-         
+
          if (inputRef.current.type === 'password') {
             setInputType('text');
          } else {
@@ -73,7 +74,7 @@ function ChangePass() {
             dispatch(addUser({ ...authUser, password: changePassData.password_2 }))
             dispatch(deleteUser())
          }, 3000)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
          if (error.data.detail) {
             setErrorMess(error.data.detail)
@@ -89,8 +90,8 @@ function ChangePass() {
          animate="visible"
          className="container pt-[240px] flex justify-between ">
          <div className="max-w-[512px] flex flex-col gap-[24px]">
-            <p onClick={() => dispatch(deleteUser())}>Back to login</p>
-            <motion.h2  variants={upAnimText} className="title">Set a password</motion.h2>
+            <Link to={'/login'} onClick={() => dispatch(deleteUser())}>Back to login</Link>
+            <motion.h2 variants={upAnimText} className="text-[40px] font-montserrat-600">Set a password</motion.h2>
             <motion.p variants={upAnimText} >Your previous password has been reseted. Please set a new password for your account.</motion.p>
 
             <motion.form onSubmit={handleChangePass}>
@@ -98,7 +99,6 @@ function ChangePass() {
                   variants={animText}
                   onClick={ChangeInputType}
                   icon={inputType == 'password' ? <IoEyeOff /> : <IoEye />}
-                  width={'100%'}
                   type={inputType}
                   label={'Old Password'}
                   ref={inputRef}
@@ -110,7 +110,6 @@ function ChangePass() {
                   variants={animText}
                   onClick={ChangeInputType}
                   icon={inputType == 'password' ? <IoEyeOff /> : <IoEye />}
-                  width={'100%'}
                   type={inputType}
                   label={'Create New Password'}
                   ref={inputRef}
@@ -121,10 +120,9 @@ function ChangePass() {
                   variants={animText}
                   onClick={ChangeInputType}
                   icon={inputType == 'password' ? <IoEyeOff /> : <IoEye />}
-                  width={'100%'}
                   type={inputType}
                   label={'Re-enter New Password'}
-                  
+
                   ref={inputRef}
                   name="password_2"
                />

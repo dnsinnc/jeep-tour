@@ -2,7 +2,8 @@
 import { RouterProvider } from 'react-router-dom'
 import { authRoutes, notAuthRoutes } from './app/routes/routes'
 import { useAppSelector } from './hooks/redux'
-import './App.css'
+import './index.css';
+
 
 
 function App() {

@@ -3,7 +3,7 @@ import { useGetUserQuery } from "../../redux";
 import { useDeleteUserMutation } from "../../redux";
 import { motion } from "framer-motion"
 
-import { ChangeButton } from "../../shared/UI/CustomButtons";
+import { TransparentButton } from "../../shared/UI/CustomButtons";
 import Header from "../../widgets/Header";
 import { MdDeleteForever } from "react-icons/md";
 import { ImCross } from "react-icons/im";
@@ -19,7 +19,7 @@ import Footer from "../../widgets/Footer";
 import { useAddProfileAvatarMutation } from "../../redux";
 import { useAppSelector } from "../../hooks/redux";
 import Spinner from "../../shared/Loader/Spinner";
-import { animText } from "../../app/MotionAnimations/animations";
+import { animText } from "../../app/MAnimations/animations";
 import Modal from "../../shared/UI/Modal";
 import ProfileSkelet from '../../shared/Loader/ProfileSkelet'
 
@@ -68,15 +68,14 @@ function UserProfile() {
 
    const onDeleteAccount = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      const password = JSON.stringify((e.target as HTMLFormElement).password.value)
-      user
-      const pass = {
-         "password": password
+      const pass = (e.target as HTMLFormElement).password.value
+      const password = {
+         "password": pass
       }
-      console.log(pass)
+      console.log(password)
 
       try {
-         await deleteAccount({ password, authUser }).unwrap()
+         await deleteAccount({ body: {}, authUser, params: { password: pass } }).unwrap()
       } catch (error) {
          console.log(error)
       }
@@ -88,7 +87,7 @@ function UserProfile() {
          animate="visible"
          onClick={openModal}
          className={modal ? 'back' : ''}>
-         <div
+         <main
             className="bg-[#FAFBFC] font-montserrat-600 "
             onClick={e => e.stopPropagation()}>
             <div>
@@ -99,7 +98,7 @@ function UserProfile() {
                {user ?
                   (<div className="container pt-[48px]">
 
-                     <motion.div custom={1} variants={animText} className="bg-profile-banner flex justify-center rounded-[12px] bg-cover bg-center w-full h-[350px] relative z-0">
+                     <motion.section custom={1} variants={animText} className="bg-profile-banner flex justify-center rounded-[12px] bg-cover bg-center w-full h-[350px] relative z-0">
                         <div className="absolute -bottom-[140px] flex flex-col items-center gap-5">
                            {isLoading ? <Spinner /> :
                               <>
@@ -115,7 +114,7 @@ function UserProfile() {
                            <p className="text-[24px] " >{user.username}</p>
                            {isError ? <div className="absolute bottom-[26px] text-[red] text-[20px]">Oops, try again</div> : ''}
                         </div>
-                     </motion.div>
+                     </motion.section>
                      <motion.div
                         initial="hidden"
                         animate="visible"
@@ -124,7 +123,7 @@ function UserProfile() {
                         <motion.div custom={2} variants={animText} className="text-xl drop-shadow-md h-[80px] bg-[#FFFFFF] rounded-[12px] flex justify-center items-center">
                            Account
                         </motion.div>
-                        <div className="pt-[96px] relative">
+                        <section className="pt-[96px] relative">
 
                            <p className="text-[32px]">Account</p>
                            <div
@@ -134,14 +133,14 @@ function UserProfile() {
                                     <p className="font-montserrat-reg text-[16px]">Name</p>
                                     <p>{user.username}</p>
                                  </div>
-                                 <ChangeButton><MdEditSquare />Change</ChangeButton>
+                                 <TransparentButton><MdEditSquare />Change</TransparentButton>
                               </motion.div>
                               <motion.div custom={3} variants={animText} className="flex justify-between">
                                  <div>
                                     <p className="font-montserrat-reg text-[16px]">Email</p>
                                     <p>{user.email ? user.email : <span className="text-stone-400">Email not specified</span>}</p>
                                  </div>
-                                 <ChangeButton><MdEditSquare />Change</ChangeButton>
+                                 <TransparentButton><MdEditSquare />Change</TransparentButton>
 
                               </motion.div>
                               <motion.div custom={4} variants={animText} className="flex justify-between">
@@ -149,14 +148,14 @@ function UserProfile() {
                                     <p className="font-montserrat-reg text-[16px]">Password</p>
                                     <p>*************</p>
                                  </div>
-                                 <Link to={"/change-password"}><ChangeButton><MdEditSquare />Change</ChangeButton></Link>
+                                 <Link to={"/change-password"}><TransparentButton><MdEditSquare />Change</TransparentButton></Link>
                               </motion.div>
                               <motion.div custom={5} variants={animText} className="flex justify-between">
                                  <div>
                                     <p className="font-montserrat-reg text-[16px]">Phone number</p>
                                     <p>{user.phone}</p>
                                  </div>
-                                 <ChangeButton><MdEditSquare /> Change</ChangeButton>
+                                 <TransparentButton><MdEditSquare /> Change</TransparentButton>
 
                               </motion.div>
                               <motion.div custom={6} variants={animText} className="flex justify-between">
@@ -164,7 +163,7 @@ function UserProfile() {
                                     <p className="font-montserrat-reg text-[16px]">Address</p>
                                     <p>{user.addres ? user.addres : <span className="text-stone-400">Address not specified</span>}</p>
                                  </div>
-                                 <ChangeButton><MdEditSquare /> Change</ChangeButton>
+                                 <TransparentButton><MdEditSquare /> Change</TransparentButton>
 
                               </motion.div>
 
@@ -173,46 +172,46 @@ function UserProfile() {
                                     <p className="font-montserrat-reg text-[16px]">Date of registration</p>
                                     <p>{user.register_data.slice(0, 10)}</p>
                                  </div>
-                                 <ChangeButton><MdEditSquare /> Change</ChangeButton>
+                                 <TransparentButton><MdEditSquare /> Change</TransparentButton>
 
                               </motion.div>
                               <div className="flex justify-end">
                                  <button
                                     onClick={openModal}
-                                    className="h-[50px] px-[10px] bg-[red] text-[white]  text-[16px] flex items-center rounded-[4px] font-montserrat-500 animated-button">
+                                    className="h-[50px] px-[10px] bg-[red] text-[white]  text-[16px] flex items-center rounded-[4px] font-montserrat-500 button-pulse">
                                     <MdDeleteForever size={'28px'} /
-                                    >Delete Account
+                                     >Delete Account
                                  </button>
                               </div>
                            </div>
                            <Modal
                               state={modal}>
-                           <form
-                              onSubmit={onDeleteAccount}
-                              className="text-center h-[280px] max-w-[600px] gap-4 items-center flex m-auto flex-col absolute z-20 top-[0] left-[0] right-[0] bottom-[50%] text-xl  bg-[#FAFBFC] p-[40px] rounded-lg">
-                              <span
-                                 onClick={openModal}
-                                 className="absolute right-3 top-3">
-                                 <ImCross />
-                              </span>
+                              <form
+                                 onSubmit={onDeleteAccount}
+                                 className="text-center h-[280px] max-w-[600px] gap-4 items-center flex m-auto flex-col absolute z-20 top-[0] left-[0] right-[0] bottom-[50%] text-xl  bg-[#FAFBFC] p-[40px] rounded-lg">
+                                 <span
+                                    onClick={openModal}
+                                    className="absolute right-3 top-3">
+                                    <ImCross />
+                                 </span>
 
                                  Are you sure you want to delete your account?
-                                 <CustomInput width={'100%'} label={"Password"} type={"password"} name={"password"} />
+                                 <CustomInput label={"Password"} type={"password"} name={"password"} />
                                  <button className="h-[50px] w-[100px] justify-center px-[10px] bg-[red]  text-[white]  text-xl flex items-center rounded-[4px]  animated-button">Yes</button>
                               </form>
                            </Modal>
-                        </div>
+                        </section>
                      </motion.div>
                   </div>)
                   : <div className="flex justify-center">
-                     <ProfileSkelet/>
+                     <ProfileSkelet />
                   </div>}
-               
-               
+
+
                < Footer />
 
             </div>
-         </div>
+         </main>
 
       </motion.div>
 

@@ -5,7 +5,6 @@ import { forwardRef, ReactNode, useRef } from "react";
 
 
 interface InputProps {
-   width: string;
    placeholder?: string;
    label?: string;
    type: string;
@@ -20,7 +19,7 @@ interface InputProps {
 
 
 
-export const CustomInput = forwardRef(({ placeholder, type, label, width, icon, onClick, pattern, autofocus, name }: InputProps, ref) =>{
+export const CustomInput = forwardRef(({ placeholder, type, label,  icon, onClick, pattern, autofocus, name }: InputProps, ref) =>{
 
    const inputRef = useRef(null)
 
@@ -33,11 +32,11 @@ export const CustomInput = forwardRef(({ placeholder, type, label, width, icon, 
    return ( 
       <motion.div
          ref={ref}
-         style={{ width: `${width}` }}
-         className="form">
-         {label && <span className="form__label">{label}</span>}
+         
+         className="mt-[20px] relative">
+         {label && <span className="px-[8px] h-[17px] bg-[white] block absolute -top-[10px] left-[20px] z-10">{label}</span>}
          <input
-            className="form__input"
+         className="form-input"
             name={name}
             autoFocus={autofocus}
             required ref={inputRef}
@@ -45,7 +44,7 @@ export const CustomInput = forwardRef(({ placeholder, type, label, width, icon, 
             placeholder={placeholder}
             pattern={pattern} />
          <div
-            className="form__icon"
+            className="form-icon"
             onClick={handleClick} >
             {icon}
          </div>

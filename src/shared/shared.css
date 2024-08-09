@@ -1,0 +1,170 @@
+.green-button {
+   background-color: #8DD3BB;
+   width: 100%;
+   padding: 18px 0;
+   border-radius: 4px;
+   font-size: 14px;
+   transition: all .4s;
+   justify-content: center;
+   font-family: 'Montserrat 600';
+   animation: 1s ease-in-out infinite change-opacity;
+}
+
+.tranparent-button{
+   
+   @apply text-[14px] px-[20px] h-[48px] border border-solid border-[#8DD3BB] rounded-[4px] font-montserrat-600 flex items-center gap-[4px]
+   
+}
+
+.tranparent-button:hover{
+   animation: .5s ease-in-out infinite button-pulse;
+}
+
+.button-pulse:hover{
+   animation: .5s ease-in-out infinite button-pulse;
+}
+.form-input {
+   @apply w-full  h-[60px] px-[18px] border-solid border-[#79747E] border rounded-md relative font-montserrat-500 text-[20px]
+}
+
+.form-icon {
+   @apply absolute top-[30%] left-[90%];
+
+   svg{
+      width: 24px;
+      height: 24px;
+   }
+}
+
+.red-text {
+   color: #FF8682;
+   text-decoration: underline;
+}
+
+.checkbox {
+   width: 24px;
+   height: 24px;
+}
+
+
+.show-menu {
+   animation: showMenu 0.6s ease both;
+   overflow: hidden;
+}
+
+.show-mess {
+   animation: hideMenu 1s ease-in-out forwards;
+   overflow: hidden;
+}
+
+.succses-mess {
+   @apply w-[700px] flex items-center absolute gap-4 top-[40%] text-[24px] font-montserrat-600 text-center bg-[#ffffff] left-[50%] z-10 -translate-x-[50%] shadow-lg shadow-gray-300 rounded-xl
+}
+
+.succses-mess span {
+   width: 20px;
+   height: 100%;
+   position: absolute;
+   left: 0;
+   top: 0;
+}
+
+/*? ======================= Animations =======================*/
+
+@keyframes button-pulse {
+   0% {
+      transform: scale(1);
+   }
+
+   50% {
+      transform: scale(1.04);
+   }
+
+   100% {
+      transform: scale(1);
+   }
+}
+
+@keyframes change-opacity {
+   0% {
+      opacity: 0.8;
+   }
+
+   50% {
+      opacity: 1;
+   }
+
+   100% {
+      opacity: 0.8;
+   }
+}
+
+@keyframes showMenu {
+   from {
+      opacity: 0;
+      height: 0;
+   }
+
+   to {
+      height: 360px;
+      opacity: 1;
+   }
+
+}
+
+@keyframes hideMenu {
+   0% {
+      opacity: 0;
+      height: 0;
+      padding: 0;
+   }
+
+   30% {
+      opacity: 1;
+      padding: 60px;
+   }
+
+   70% {
+      opacity: 1;
+      padding: 60px;
+   }
+
+   100% {
+      opacity: 0;
+      height: 0;
+      padding: 0;
+   }
+}
+
+
+/** ======================= Input File ======================= */
+
+.input-file {
+   position: relative;
+   display: inline-block;
+}
+
+.input-file span {
+   transition: background-color 0.2s;
+   
+   @apply cursor-pointer text-[white] flex items-center justify-center rounded-full bg-[#FF8682] w-[46px] h-[46px]
+}
+
+.input-file input[type=file] {
+   display: none;
+}
+
+/* Focus */
+.input-file input[type=file]:focus+span {
+   box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+
+/* Hover/active */
+.input-file:hover span {
+   background-color: #f65651;
+}
+
+/* Disabled */
+.input-file input[type=file]:disabled+span {
+   background-color: #eee;
+}

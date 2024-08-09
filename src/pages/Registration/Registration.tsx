@@ -17,7 +17,7 @@ import { IoEye } from "react-icons/io5";
 import air from '../Authorization/air.png'
 import hotel from '../Authorization/hotel.png'
 import CustomToast, { ToastVariant } from "../../shared/UI/CustomToast";
-import { animText, upAnimText } from "../../app/MotionAnimations/animations";
+import { animText, upAnimText } from "../../app/MAnimations/animations";
 import { motion } from "framer-motion";
 
 
@@ -44,7 +44,7 @@ function Registration() {
       initialIndex: 1,
       autoPlay: true
    }
-   
+
    const imageForSlider = {
       id: [1, 2, 3],
       title: ["first", "second", "three"],
@@ -69,8 +69,8 @@ function Registration() {
       try {
          await regUser(newUser).unwrap();
          setTimeout(() => {
-            nav('/')
-         }, 3000);
+            nav('/login')
+         }, 1000);
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
          if (error.data.detail) {
@@ -88,13 +88,12 @@ function Registration() {
          <FlickitySlider images={imageForSlider} options={flickityOptions}></FlickitySlider>
 
          <div className="max-w-[512px] flex flex-col gap-[24px]">
-            <motion.h2 variants={upAnimText} className="title" >Sign Up</motion.h2>
+            <motion.h2 variants={upAnimText} className="text-[40px] font-montserrat-600" >Sign Up</motion.h2>
             <motion.p variants={upAnimText}>Sign Up to access your Jeep Tour account</motion.p>
 
             <motion.form onSubmit={userReg}>
                <MCustomInput
                   variants={animText}
-                  width={'100%'}
                   type={'text'}
                   label={'Username'}
                   autofocus
@@ -102,7 +101,6 @@ function Registration() {
                <MCustomInput
                   custom={1}
                   variants={animText}
-                  width={'100%'}
                   type={'tel'}
                   label={'Phone Number'}
                   placeholder='00 000 000 000'
@@ -113,7 +111,6 @@ function Registration() {
                   variants={animText}
                   onClick={ChangeInputType}
                   icon={inputType == 'password' ? <IoEyeOff /> : <IoEye />}
-                  width={'100%'}
                   type={inputType}
                   label={'Password'}
                   ref={inputRef}
@@ -124,7 +121,6 @@ function Registration() {
                   variants={animText}
                   onClick={ChangeInputType}
                   icon={inputType == 'password' ? <IoEyeOff /> : <IoEye />}
-                  width={'100%'}
                   type={inputType}
                   label={'Password'}
                   ref={inputRef}
@@ -150,7 +146,7 @@ function Registration() {
             </motion.form>
 
             <div>
-               <p className="text-center">Already have an account? <Link to={"/"}><span className="red-text">Login</span></Link></p>
+               <p className="text-center">Already have an account? <Link to={"/login"}><span className="red-text">Login</span></Link></p>
                <div className="flex items-center justify-between pt-[16px]">
                   <hr className="bg-[#dadada]  h-[0.5px] max-w-[154px]" />
                   <p className="text-[#949494] font-montserrat-reg">Or Sign up with</p>

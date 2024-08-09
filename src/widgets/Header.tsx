@@ -1,13 +1,11 @@
 import { useGetUserQuery } from "../redux";
 import { deleteUser } from "../redux/userSlicer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import { IoIosBed } from "react-icons/io";
-import { IoAirplane } from "react-icons/io5";
 import { TbMinusVertical } from "react-icons/tb";
 import { FaHeart } from "react-icons/fa";
-import { FaUser } from "react-icons/fa6";
+import { FaPersonHiking, FaUser } from "react-icons/fa6";
 import { IoLogOut } from "react-icons/io5";
 import { HiSupport } from "react-icons/hi";
 
@@ -15,10 +13,14 @@ import { IoSettings } from "react-icons/io5";
 import { useState } from "react";
 import { GoChevronRight } from "react-icons/go";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { animText } from "../app/MotionAnimations/animations";
+import { downAnimText } from "../app/MAnimations/animations";
+import { RiSearch2Fill } from "react-icons/ri";
 
+interface HeaderProps {
+   transparent?: boolean
+}
 
-const Header = () => {
+const Header = ({ transparent }: HeaderProps) => {
    const authUser = useAppSelector((state) => state.user.authUser)
    const dispatch = useAppDispatch()
    const nav = useNavigate()
@@ -28,78 +30,74 @@ const Header = () => {
 
 
    const logout = () => {
-      nav('/')
+      nav('/login')
       dispatch(deleteUser())
    }
 
 
-      return (
+   return (
 
-         <motion.header
-            initial="hidden"
-            animate="visible"
-            variants={animText}
-            custon={3}
-            className="drop-shadow-md bg-[white] h-[87px]  font-montserrat-600">
+      <motion.header
+         initial="hidden"
+         animate="visible"
+         variants={downAnimText}
+         custom={2}
+         className={`drop-shadow-md ${transparent ? '' : 'bg-[white]'} h-[87px] font-montserrat-600`}>
 
-            <div className="container flex justify-between relative items-center h-[100%]">
-               <div className="flex gap-10">
-                  <p className="flex items-center gap-1"><IoAirplane size={'24px'} /> Find Flight</p>
-                  <p className="flex items-center gap-1"><IoIosBed size={'24px'} /> Find Stays</p>
-               </div>
-               <div
-                  className="text-2xl">LOGO</div>
-               <div className="flex items-center gap-2">
-                  <FaHeart size={'20px'} />
-                  Favourites
-                  <TbMinusVertical size={'24px'} />
-
-                  {user ? (
-                     <div className="">
-                        <div
-                           onClick={() => setProfileMenu(!profileMenu)}
-                           className="flex items-center gap-2 cursor-pointer">
-                           <img className="object-cover w-[45px] h-[45px] rounded-full" src={user.url} alt="" />
-                           <p>{user.username}</p>
-                        </div>
-
-                        {profileMenu &&
-                           <div className='w-[320px] show-menu z-10 top-[80px] rounded-[12px] right-[100px] bg-[white] absolute p-8 '>
-                              <div className="flex items-center gap-4 cursor-pointer">
-                                 <img className="w-[64px] h-[64px] rounded-full object-cover" src={user.url} alt="" />
-                                 <div>
-                                    <p className='text-[20px]'>{user.username}</p>
-                                    <p className="font-montserrat-reg">Online</p>
-                                 </div>
-                              </div>
-                              <div className=" mt-[10px] mb-[5px] flex flex-col gap-[15px]">
-                                 <hr className="my-[10px] w-full h-[0.5px] opacity-[25%] bg-[#112211]" />
-                                 <p className="flex gap-2 font-montserrat-500 items-center"><FaUser size={'22px'} />My account <GoChevronRight />
-                                 </p>
-                                 <p className="flex gap-2 font-montserrat-500 items-center"><IoSettings size={'22px'} />Settings <GoChevronRight />
-                                 </p>
-                                 <hr className="my-[10px] w-full h-[0.5px] opacity-[25%] bg-[#112211]" />
-                                 <p className="flex gap-2 font-montserrat-500 items-center"><HiSupport size={'22px'} />Support <GoChevronRight />
-                                 </p>
-                                 <p
-                                    onClick={logout}
-                                    className="flex gap-2 font-montserrat-500 items-center"><IoLogOut size={'22px'} />Logout
-                                 </p>
-                              </div>
-                           </div>
-                        }
-                     </div>
-                  )
-                     : <div>
-                        <p>User</p>
-                     </div>}
-
-               </div>
-
+         <div className="max-w-[1380px] m-auto px-[30px] flex justify-between relative items-center h-[100%]">
+            <div className="flex gap-10">
+               <Link to={''} className="flex items-center gap-3"><RiSearch2Fill size={'24px'} />Find a Tour</Link>
+               <Link to={''} className="flex items-center gap-3"><FaPersonHiking size={'24px'} />Become a Tour Guide</Link>
             </div>
-         </motion.header>
-      );
-   }
+            <Link className='text-2xl z-0 right-[50%] translate-x-[36px] absolute ' to={'/'}>LOGO</Link>
+            {user ? (
+               <div className="flex items-center gap-2">
+                  <Link className="flex gap-2" to={''}> <FaHeart size={'20px'} />
+                     <p>Favorite</p></Link>
+                  <TbMinusVertical size={'24px'} />
+                  <div
+                     onClick={() => setProfileMenu(!profileMenu)}
+                     className="flex items-center gap-2 cursor-pointer">
+                     <img className="object-cover w-[45px] h-[45px] rounded-full" src={user.url} alt="" />
+                     <p className="hover:text-[#FF8682] transition-all duration-300">{user.username}</p>
+                  </div>
+                  {profileMenu &&
+                     <div className='w-[320px] show-menu top-[80px] rounded-[12px] right-[100px] text-[black] z-20 bg-[white] absolute p-8 '>
+                        <div className="flex items-center gap-4 cursor-pointer">
+                           <img className="w-[64px] h-[64px] rounded-full object-cover" src={user.url} alt="" />
+                           <div>
+                              <p className='text-[20px]'>{user.username}</p>
+                              <p className="font-montserrat-reg">Online</p>
+                           </div>
+                        </div>
+                        <div className=" mt-[10px] mb-[5px] flex flex-col gap-[15px]">
+                           <hr className="my-[10px] w-full h-[0.5px] opacity-[25%] bg-[#112211]" />
+                           <Link to={'/my-profile'} className="flex gap-2 font-montserrat-500 items-center"><FaUser size={'22px'} />My account <GoChevronRight />
+                           </Link>
+                           <Link to={'/'} className="flex gap-2 font-montserrat-500 items-center"><IoSettings size={'22px'} />Settings <GoChevronRight />
+                           </Link>
+                           <hr className="my-[10px] w-full h-[0.5px] opacity-[25%] bg-[#112211]" />
+                           <Link to={'/'} className="flex gap-2 font-montserrat-500 items-center"><HiSupport size={'22px'} />Support <GoChevronRight />
+                           </Link>
+                           <Link to={'/login'}
+                              onClick={logout}
+                              className="flex gap-2 font-montserrat-500 items-center"><IoLogOut size={'22px'} />Logout
+                           </Link>
+                        </div>
+                     </div>
+                  }
+
+               </div>
+            )
+               : <div className="flex items-center gap-9">
+                  <Link to={'/login'}>Login</Link>
+                  <Link className="bg-[white] text-[black] px-[20px] py-[12px] rounded-[8px] duration-500 transition-all hover:bg-slate-200" to={'/registration'}>Sign Up</Link>
+               </div>}
+         </div>
+
+      </motion.header >
+   );
+}
 
 
 export default Header;

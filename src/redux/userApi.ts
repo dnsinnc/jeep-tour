@@ -60,13 +60,13 @@ export const userApi = createApi({
          invalidatesTags: [{ type: 'User', id: 'USER' }],
       }),
       deleteUser: build.mutation({
-         query: ({passwords, authUser }) => ({
-            url: '/user/delete/me/profile/',
+         query: ({ params, body, authUser }) => ({
+            url: `/user/delete/me/profile/?password=${params.password}`,
             method: 'DELETE',
             headers: {
                'Authorization': 'Basic ' + btoa(`${authUser.username}:${authUser.password}`),
             },
-            body: passwords,
+            body
          }),
       }),
    }),
