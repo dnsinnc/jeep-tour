@@ -7,6 +7,7 @@ export default defineConfig({
    server: {
       port: 8001,
    },
+  base: '/jeep-tour'
 })
 
 

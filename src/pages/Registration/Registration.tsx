@@ -69,7 +69,7 @@ function Registration() {
       try {
          await regUser(newUser).unwrap();
          setTimeout(() => {
-            nav('/login')
+            nav('/jeep-tour/login')
          }, 1000);
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
@@ -146,7 +146,7 @@ function Registration() {
             </motion.form>
 
             <div>
-               <p className="text-center">Already have an account? <Link to={"/login"}><span className="red-text">Login</span></Link></p>
+               <p className="text-center">Already have an account? <Link to={"/jeep-tour/login"}><span className="red-text">Login</span></Link></p>
                <div className="flex items-center justify-between pt-[16px]">
                   <hr className="bg-[#dadada]  h-[0.5px] max-w-[154px]" />
                   <p className="text-[#949494] font-montserrat-reg">Or Sign up with</p>

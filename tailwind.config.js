@@ -14,9 +14,13 @@ export default {
            'trade-goticLT': ['"Trade Gothic LT"']
         }, backgroundImage: {
            'profile-banner': "url(./pages/UserProfile/profile-banner.png)",
-           'back-landing-banner': "url(./pages/Landing/background.png)",
+           'back-landing-banner': "url(./pages/Landing/background.jpg)",
            'attractions': "url(./pages/Landing/attractions.png)",
            'guide': "url(./pages/Landing/guide.png)"
+           
+        },
+        dropShadow: {
+           '3xl': '0px 4px 16px rgba(0, 0, 0, 0.07)',
            
         }
     },

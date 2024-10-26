@@ -24,7 +24,7 @@
    animation: .5s ease-in-out infinite button-pulse;
 }
 .form-input {
-   @apply w-full  h-[60px] px-[18px] border-solid border-[#79747E] border rounded-md relative font-montserrat-500 text-[20px]
+   @apply w-full h-[60px] px-[18px] border-solid border-[#79747E] border rounded-md relative font-montserrat-500 text-[20px]
 }
 
 .form-icon {
@@ -57,11 +57,11 @@
    overflow: hidden;
 }
 
-.succses-mess {
-   @apply w-[700px] flex items-center absolute gap-4 top-[40%] text-[24px] font-montserrat-600 text-center bg-[#ffffff] left-[50%] z-10 -translate-x-[50%] shadow-lg shadow-gray-300 rounded-xl
+.toast-mess {
+   @apply w-[700px] flex items-center absolute gap-4 top-[40%] text-[24px] font-montserrat-600 text-center bg-[#ffffff] left-[50%] z-10 -translate-x-[50%] shadow-lg shadow-gray-600 rounded-xl
 }
 
-.succses-mess span {
+.toast-mess span {
    width: 20px;
    height: 100%;
    position: absolute;

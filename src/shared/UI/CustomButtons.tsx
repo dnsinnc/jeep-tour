@@ -7,10 +7,10 @@ interface ButtonProps {
    img?: React.ReactElement
 }
 
-export function GreenButton({img, children, width }: ButtonProps) {
+export function GreenButton({ img, onClick, children, width }: ButtonProps) {
    return (
 
-      <button type="submit" style={{ maxWidth: `${width}` }} className="items-center flex gap-2 button green-button hover:bg-[#66b798]">
+      <button onClick={onClick} type="submit" style={{ maxWidth: `${width}` }} className="items-center flex gap-2 button green-button hover:bg-[#66b798]">
          {img} 
          {children}
       </button>

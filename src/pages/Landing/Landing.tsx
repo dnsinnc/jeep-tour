@@ -6,8 +6,11 @@ import Header from "../../widgets/Header";
 import sulac from './sulac canyon.png'
 import { GiColombianStatue } from "react-icons/gi";
 import { PiIdentificationCardFill } from "react-icons/pi";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { downAnimText, upAnimText } from "../../app/MAnimations/animations";
+import { useAppSelector } from "../../hooks/redux";
+import CustomToast, { ToastVariant } from "../../shared/UI/CustomToast";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -45,10 +48,28 @@ const cards = [
 
 
 const Landing = () => {
+   const authUser = useAppSelector((state) => state.user.authUser)
+   const [info, setInfo] = useState(false)
+   const headerRef = useRef<HTMLDivElement>(null)
+   const nav = useNavigate()
+
    const ref = useRef(null)
    const isInView = useInView(ref)
 
 
+
+   const toForm = () => {
+      if (!authUser) {
+         setInfo(true)
+         setTimeout(() => {
+            setInfo(false)
+            headerRef.current?.scrollIntoView({ behavior: 'smooth' })
+
+         }, 1000)
+      } else {
+         nav('/jeep-tour/guide-form')
+      }
+   }
 
    return (
       <div className="bg-[#F5F5F5] ">
@@ -59,7 +80,7 @@ const Landing = () => {
             <motion.section
                variants={upAnimText}
                className="filter relative text-[white] bg-back-landing-banner bg-center rounded-[24px] h-[599px] bg-cover bg-no-repeat ">
-               <div className="relative">
+               <div ref={headerRef} className="relative">
                   <Header transparent />
                   <div className="text-center pt-[84px] ">
                      <h3 className="text-[45px]">Helping Others</h3>
@@ -67,8 +88,6 @@ const Landing = () => {
                      <p className="text-[20px] font-montserrat-400" >Special offers to suit your plan</p>
                   </div>
                </div>
-
-
             </motion.section>
             <div className="container">
                <section>
@@ -82,11 +101,8 @@ const Landing = () => {
                      </div>
                   </motion.div>
 
-
                   {!cards ? '' :
-
                      <div
-
                         ref={ref} className="md:grid-cols-2 lg:grid-cols-3 grid pt-[40px] gap-[32px]">
                         {cards.map((c, i) => (
                            <motion.div variants={upAnimText} custom={i + 1} className="flex gap-4 font-montserrat-600 bg-[white] max-w-[390px] p-4 rounded-2xl drop-shadow-md">
@@ -100,8 +116,7 @@ const Landing = () => {
                      </div>
                   }
                </section>
-
-               <section ref={ref} className="flex  gap-[24px] pt-[80px] text-[white] text-center">
+               <section ref={ref} className="flex gap-[24px] pt-[80px] text-[white] text-center">
                   <div
                      className={`pt-[360px] bg-cover bg-attractions w-1/2 rounded-[20px] h-[550px] duration-700 transition-all ${isInView ? '' : '-translate-x-[200px] opacity-0'}`}>
                      <h3 className="text-[40px] font-trade-gotic">
@@ -114,6 +129,10 @@ const Landing = () => {
                         <GreenButton img={<GiColombianStatue />}>Show Tours</GreenButton>
                      </div>
                   </div>
+                  <div className="relative flex justify-center left-0 ]">
+                     {info && <CustomToast variant={ToastVariant.info}>First you need to register or log in to your account
+                     </CustomToast>}
+                  </div>
                   <div
                      className={`pt-[360px] bg-cover bg-guide w-1/2 rounded-[20px] h-[550px] duration-700	transition-all ${isInView ? '' : 'translate-x-[200px] opacity-0'}`}>
                      <h3 className="text-[40px] font-trade-gotic">
@@ -123,7 +142,9 @@ const Landing = () => {
                         Fill out the form and become a tour guide in your city!
                      </p>
                      <div className="w-[200px] text-[black] text-[14px] m-auto pt-[16px]">
-                        <GreenButton img={<PiIdentificationCardFill />}><p>Become a Tour Guide</p></GreenButton>
+                        <GreenButton onClick={toForm} img={<PiIdentificationCardFill />}>
+                           <p>Become a Tour Guide</p>
+                        </GreenButton>
                      </div>
                   </div>
                </section>

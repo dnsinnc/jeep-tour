@@ -133,13 +133,13 @@ function Authorization() {
                   <input className="checkbox" type="checkbox" name="" id="" />
                   <p>Remember me</p>
                </div>
-               <Link to={"/forgotpass"}><p className="red-text">Forgot password</p> </Link>
+               <Link to={""}><p className="red-text">Forgot password</p> </Link>
 
             </div>
 
             <div>
                <p className="text-center">Don’t have an account?
-                  <Link to={"/registration"}><span className="red-text"> Sign up</span></Link></p>
+                  <Link to={"/jeep-tour/registration"}><span className="red-text"> Sign up</span></Link></p>
                <div className="flex items-center justify-between pt-[40px]">
                   <hr className="bg-[#dadada]  h-[0.5px] w-[194px]" />
                   <p className="text-[#949494] font-montserrat-reg">Or login with</p>

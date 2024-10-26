@@ -15,13 +15,16 @@ interface imageForSlider {
 interface SliderProps {
    images: imageForSlider | undefined,
    options: Options,
+   size?: number
 }
 
-function FlickitySlider({ images, options }: SliderProps) {
+function FlickitySlider({ images, options, size }: SliderProps) {
    return (
+
+      
       <>
          <Flickity
-            className="Slider w-[600px]"
+            className={size ? `w-[${size}px]` : 'w-[600px]'}
             elementType="div"
             disableImagesLoaded={false}
             options={options}

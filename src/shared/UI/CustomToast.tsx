@@ -42,7 +42,7 @@ const CustomToast: React.FC<ToastProps> = ({ variant, children }) => {
 
    const { backgroundColor, textColor, icon } = variantStyles[variant || ToastVariant.info]; 
    return (
-      <div className="succses-mess show-mess text-[red]">
+      <div className="toast-mess show-mess">
          <div className="flex flex-col">
             <div className="flex">
                <span className={`${backgroundColor}`}> </span>

@@ -14,12 +14,12 @@ interface InputProps {
    pattern?: string
    autofocus?: boolean
    name: string
-   
+
 }
 
 
 
-export const CustomInput = forwardRef(({ placeholder, type, label,  icon, onClick, pattern, autofocus, name }: InputProps, ref) =>{
+export const CustomInput = forwardRef(({  placeholder, type, label,  icon, onClick, pattern, autofocus, name }: InputProps, ref) =>{
 
    const inputRef = useRef(null)
 
@@ -34,15 +34,17 @@ export const CustomInput = forwardRef(({ placeholder, type, label,  icon, onClic
          ref={ref}
          
          className="mt-[20px] relative">
-         {label && <span className="px-[8px] h-[17px] bg-[white] block absolute -top-[10px] left-[20px] z-10">{label}</span>}
+         {label && <span className=" px-[8px] h-[18px] bg-[white] block absolute -top-[10px] left-[20px] z-10">{label}</span>}
          <input
-         className="form-input"
+            className={`form-input`}
             name={name}
             autoFocus={autofocus}
             required ref={inputRef}
             type={type}
             placeholder={placeholder}
-            pattern={pattern} />
+            pattern={pattern}
+
+         />
          <div
             className="form-icon"
             onClick={handleClick} >

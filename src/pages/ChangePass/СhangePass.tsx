@@ -90,7 +90,7 @@ function ChangePass() {
          animate="visible"
          className="container pt-[240px] flex justify-between ">
          <div className="max-w-[512px] flex flex-col gap-[24px]">
-            <Link to={'/login'} onClick={() => dispatch(deleteUser())}>Back to login</Link>
+            <Link to={'/jeep-tour/login'} onClick={() => dispatch(deleteUser())}>Back to login</Link>
             <motion.h2 variants={upAnimText} className="text-[40px] font-montserrat-600">Set a password</motion.h2>
             <motion.p variants={upAnimText} >Your previous password has been reseted. Please set a new password for your account.</motion.p>
 

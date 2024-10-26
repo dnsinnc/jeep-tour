@@ -28,13 +28,12 @@ function RecoveryPass() {
    return (
       <div className="container pt-[240px] flex justify-around ">
          <div className="max-w-[512px] flex flex-col gap-[24px]">
-            <Link to={"/"}><p className="flex items-center"><GoChevronLeft size={'30px'}/> Back to login</p></Link>
+            <Link to={"/jeep-tour"}><p className="flex items-center"><GoChevronLeft size={'30px'}/> Back to login</p></Link>
             <h2 className="title">Forgot your password?</h2>
             <p>Don’t worry, happens to all of us. Enter your email below to recover your password</p>
             <form>
               
                <CustomInput
-                  width={'100%'}
                   label={"Email"}
                   type={"email"}
                   autofocus name={"verify"}

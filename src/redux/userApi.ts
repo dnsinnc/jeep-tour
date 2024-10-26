@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IAuth, IRegister } from "../types/userTypes";
 
+
+
+
+
 export const userApi = createApi({
    reducerPath: 'userApi',
    tagTypes: ['User'],

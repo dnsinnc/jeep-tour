@@ -8,17 +8,19 @@ import './index.css';
 
 function App() {
    const authUser = useAppSelector((state) => state.user.authUser)
+   console.log(authUser)
 
-   if (authUser) {
+
+   if (Object.keys(authUser).length === 0) {
       return (
          <>
-            <RouterProvider router={authRoutes} />
+            <RouterProvider router={notAuthRoutes} />
          </>
       )
    } else {
       return (
          <>
-            <RouterProvider router={notAuthRoutes} />
+            <RouterProvider router={authRoutes} />
          </>
       )
    }

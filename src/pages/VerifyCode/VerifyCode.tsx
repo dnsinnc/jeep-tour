@@ -10,6 +10,7 @@ import { IoEye } from "react-icons/io5";
 
 import air from '../Authorization/air.png'
 import hotel from '../Authorization/hotel.png'
+import { Link } from "react-router-dom";
 
 function VerifyCode() {
    const inputRef = useRef<string>('password')
@@ -42,7 +43,7 @@ function VerifyCode() {
 
 
          <div className="max-w-[512px] flex flex-col gap-[24px]">
-            <p>Back to login</p>
+            <Link to={'/jeep-tour/login'}>Back to login</Link>
             <h2 className="title" >Verify code</h2>
             <p>An authentication code has been sent to your email.</p>
 
